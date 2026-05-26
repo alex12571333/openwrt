@@ -60,7 +60,7 @@ jobs:
           name: openwrt-gl-mt5000
           path: |
             bin/targets/mediatek/filogic/openwrt-mediatek-filogic-glinet_gl-mt5000-squashfs-sysupgrade.bin
-          retention-days: 7
+          retention-days: 30
 
       - name: Upload build log on failure
         if: failure()

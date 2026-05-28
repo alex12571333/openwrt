@@ -40,13 +40,30 @@ jobs:
           CONFIG_PACKAGE_wget-ssl=y
           CONFIG_PACKAGE_curl=y
           CONFIG_PACKAGE_unzip=y
-          CONFIG_PACKAGE_iptables=y
-          CONFIG_PACKAGE_iptables-mod-tproxy=y
           CONFIG_PACKAGE_ip-full=y
           CONFIG_PACKAGE_ipset=y
-          CONFIG_PACKAGE_kmod-ipt-tproxy=y
+          CONFIG_PACKAGE_kmod-tun=y
+          CONFIG_PACKAGE_kmod-inet-diag=y
+          CONFIG_PACKAGE_kmod-nft-tproxy=y
+          CONFIG_PACKAGE_nftables=y
+          CONFIG_PACKAGE_kmod-nf-tproxy=y
+          CONFIG_PACKAGE_sing-box=y
+          CONFIG_PACKAGE_podkop=y
+          CONFIG_PACKAGE_luci-app-podkop=y
+          CONFIG_PACKAGE_luci-i18n-podkop-ru=y
+          CONFIG_PACKAGE_jq=y
+          CONFIG_PACKAGE_coreutils-base64=y
           EOF
           make defconfig
+
+      - name: Set LAN IP to 192.168.2.1
+        run: |
+          mkdir -p files/etc/uci-defaults
+          cat > files/etc/uci-defaults/99-lan-ip << 'EOF'
+          #!/bin/sh
+          uci set network.lan.ipaddr='192.168.2.1'
+          uci commit network
+          EOF
 
       - name: Download sources
         run: make download -j8
